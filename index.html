@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sarcasm Converter</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://kit.fontawesome.com/3c35be3df3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="title-container">
+        <h1 class="title">Sarcasm Converter</h1>
+    </div>
+
+	<form>
+		<label for="input-text">Input:</label><br>
+		<textarea id="input-text" name="input-text" rows="10" cols="50" oninput="updateOutput()"></textarea><br>
+		<br>
+		<label for="output-text">Sarcasm:</label><br>
+		<textarea id="output-text" name="output-text" rows="10" cols="50" readonly></textarea>
+        
+	</form>
+	<button class=clipboard-button onclick="copyToClipboard()"><i class="fa-solid fa-copy"></i></button>
+	<script>
+		function updateOutput() {
+			var inputText = document.getElementById("input-text").value;
+			var outputText = sarcasticConvert(inputText);
+			document.getElementById("output-text").value = outputText;
+		}
+
+		function sarcasticConvert(inputText) {
+			var outputText = "";
+			var isUpper = true;
+			for (var i = 0; i < inputText.length; i++) {
+				if (inputText.charAt(i) !== ' ') {
+					if (isUpper) {
+						outputText += inputText.charAt(i).toUpperCase();
+						isUpper = false;
+					} else {
+						outputText += inputText.charAt(i).toLowerCase();
+						isUpper = true;
+					}
+				} else {
+					outputText += ' ';
+				}
+			}
+			return outputText;
+		}
+        
+        function copyToClipboard() {
+            var outputTextarea = document.getElementById("output-text");
+            outputTextarea.select();
+            document.execCommand("copy");
+        }
+
+    </script>
+</body>
+</html>
